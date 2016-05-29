@@ -1,0 +1,120 @@
+-- Solarized Colors
+base03  = "002b36";
+base02  = "073642";
+base01  = "586e75";
+base00  = "657b83";
+base0   = "839496";
+base1   = "93a1a1";
+base2   = "eee8d5";
+base3   = "fdf6e3";
+yellow  = "b58900";
+orange  = "cb4b16";
+red     = "dc322f";
+magenta = "d33682";
+violet  = "6c71c4";
+blue    = "268bd2";
+cyan    = "2aa198";
+green   = "859900";
+
+conky.config = {
+-- Solarized Color Settings
+color0 = base02,
+color1 = base00,
+color2 = blue,
+color8 = cyan,
+-- view tags
+color3 = orange, --active
+color4 = blue, -- used
+color5 = red, -- urgent
+color6 = orange, -- viewed
+color7 = base01, -- empty
+-- Use double buffering (eliminates flickering)
+
+double_buffer = true,
+
+-- Run conky in the background
+background = false,
+
+-- Update interval in seconds
+update_interval = 1.0,
+
+-- Set to zero to run forever
+total_run_times = 0,
+
+-- Subtract file system buffers from used memory
+no_buffers = true,
+
+-- Number of samples to take for CPU and network readings
+cpu_avg_samples = 2,
+net_avg_samples = 2,
+
+-- Styling options
+ pad_percents = 2,
+short_units = true,
+default_bar_width = 80,
+default_bar_height = 16,
+
+-- Use Xft (anti-aliased font and stuff)
+use_xft = true,
+font = 'DejaVu Sans Mono for Powerline:size=8',
+xftalpha = 1,
+uppercase = false,
+
+-- Prevent text from moving around while using a mono font
+use_spacer = 'left',
+
+-- Default color and border settings
+default_color = 'black',
+
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+--draw_outline Makes conky window transparent
+
+-- Eliminate flickering
+double_buffer =true,
+
+own_window = true,
+own_window_class ='Conky',
+own_window_colour = base03,
+--own_window_transparent = false,
+own_window_type = 'desktop',
+own_window_argb_visual = true,
+own_window_argb_value = 230,
+
+
+own_window_hints = 'undecorated,skip_taskbar,sticky,skip_pager',
+--  Window size and position
+-- minimum_height = 60,
+alignment = 'top_left',
+minimum_width = 3000,
+maximum_width = 3000,
+gap_x = 0,
+gap_y = 0,
+
+-- Templates
+template0 = [[${color3}| ${color1}\1: ]], -- template0 name 
+-- template0 = [[${offset 10}${color3}|${offset 10}${color1}\1: ]], -- template0 name 
+template1 = [[${offset 10}]], -- template1 offset
+template2 = [[${offset 10}${color3}|${offset 10}${color1}\2: ${color3}${voffset 3.5}${\1bar \3 16,80 \4}${voffset -3.5}]],
+template3 = [[${offset 10}${color3}|${offset 10}${color1}\1: ${color3}${voffset 3.5}${\1bar 16,80 \2}${voffset -3.5}]],
+template4 = [[${color\1}${\2}${color\3}\4${color\5}${\6}]],
+template6 = [[${color\1}${\2}\7${color\3}\4${color\5}${\6}\8]],
+template5 = [[${voffset 3.5}${\1}${voffset -3.5}]],
+}
+-- color1= base00
+-- color2= blue
+-- color3= orange
+-- color8= cyan
+conky.text = [[
+ ${voffset 13}${execp ~/.config/herbstluftwm/tags.sh}${voffset -13} \
+${goto 750}${template0 cpu}${template5 cpubar\ cpu0} ${template6 2 cpu\ cpu0  3 @ 1 freq_g\ cpu0 % GHz}\
+${goto 1150}${template0 \ /\ }${template5 fs_bar\ /} ${template4 2 fs_used\ / 1 / 1 fs_size\ /}\
+${goto 1550}${template0 wifi}${if_up wlp4s0}${addrs wlp4s0}${else}${color3}disconnected${endif}\
+${goto 1950}${template0 up\ \ }${template4 4 upspeed 1 @ 1 totalup}\
+${goto 2350}${template0 time}${color2}${time %a %d. %b}${color3} ${time %H:%M}
+${goto 750}${template0 mem}${template5 membar}\
+${goto 1550}${template0 wan\ }${if_gw}${execi 60 curl ifconfig.co}${else}${color3}disconnected${endif}\
+${goto 1950}${template0 down}${template4 4 downspeed 1 @ 1 totaldown}\
+${goto 2350}${template0 bat\ }${template5 execpi\ 10\ ~/.config/herbstluftwm/bat.pl}\
+]]

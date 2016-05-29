@@ -1,0 +1,173 @@
+#!/bin/bash
+
+# this is a simple config for herbstluftwm
+
+
+# theme
+# solarized
+
+base03='#002b36'
+base02='#073642'
+base01='#586e75'
+base00='#657b83'
+base0='#839496'
+base1='#93a1a1'
+base2='#eee8d5'
+base3='#fdf6e3'
+yellow='#b58900'
+orange='#cb4b16'
+red='#dc322f'
+magenta='#d33682'
+violet='#6c71c4'
+blue='#268bd2'
+cyan='#2aa198'
+green='#859900'
+
+black='#000000' #black
+white='#AAAAAA' #white
+
+#script locations
+autostartPrograms=~/.config/herbstluftwm/programs.sh
+
+
+hc() {
+  herbstclient "$@" 
+}
+hc emit_hook reload
+#bash ~/.config/herbstluftwm/wallpaper.sh &
+hc keyunbind --all # remove all existing keybindings
+#Mod=Mod1    # Use alt as the main modifier
+Mod=Mod4   # Use the super key as the main modifier
+  
+
+hc keybind $Mod-Shift-q quit
+hc keybind $Mod-Shift-r reload
+hc keybind $Mod-w close
+ 
+#hc keybind $Mod-Return spawn urxvt -e "zsh -c '/home/sl33k/.tmx.sh term'"
+hc keybind $Mod-Return spawn urxvt
+hc keybind $Mod-a spawn firefox
+hc keybind $Mod-s spawn zathura
+hc keybind $Mod-d spawn urxvt
+#hc keybind $Mod-space spawn dmenu_run -fn "-xos4-terminus-medium-r-*-*-14-*" -nb "#000000" -nf "#FFFFFF" -sb "#000000" -sf "#FF0000"
+hc keybind $Mod-space spawn dmenu_run -fn "xft:DejaVu\ Sans\ Mono\ for\ Powerline:size=8" -nb $base03 -nf $blue -sb $base02 -sf $orange -i
+hc keybind $Mod-Control-s spawn systemctl suspend
+hc keybind $Mod-s spawn bash ~/.config/herbstluftwm/dpmstoggle.sh
+# basic movement
+# focusing clients
+#hc keybind $Mod-Left  focus left
+#hc keybind $Mod-Down  focus down
+#hc keybind $Mod-Up    focus up
+#hc keybind $Mod-Right focus right
+hc keybind $Mod-h     focus left
+hc keybind $Mod-j     focus down
+hc keybind $Mod-k     focus up
+hc keybind $Mod-l     focus right
+# moving clients
+#hc keybind $Mod-Shift-Left  shift left
+#hc keybind $Mod-Shift-Down  shift down
+#hc keybind $Mod-Shift-Up    shift up
+#hc keybind $Mod-Shift-Right shift right
+hc keybind $Mod-Shift-h     shift left
+hc keybind $Mod-Shift-j     shift down
+hc keybind $Mod-Shift-k     shift up
+hc keybind $Mod-Shift-l     shift right
+# splitting frames
+hc keybind $Mod-u       split   bottom  0.5
+hc keybind $Mod-o       split   right   0.5
+hc keybind $Mod-i       split   explode
+# resizing frames
+resizestep=0.05
+resizestep2=0.05
+hc keybind $Mod-Control-h       resize left +$resizestep
+hc keybind $Mod-Control-j       resize down +$resizestep
+hc keybind $Mod-Control-k       resize up +$resizestep
+hc keybind $Mod-Control-l       resize right +$resizestep
+#hc keybind $Mod-Control-Left    resize left +$resizestep2
+#hc keybind $Mod-Control-Down    resize down +$resizestep2
+#hc keybind $Mod-Control-Up      resize up +$resizestep2
+#hc keybind $Mod-Control-Right   resize right +$resizestep2
+# layouting
+hc keybind $Mod-r remove
+hc keybind $Mod-p rotate
+hc keybind Mod1-Tab cycle_layout 1
+#hc keybind $Mod-s floating toggle
+hc keybind $Mod-f fullscreen toggle
+hc keybind $Mod-Shift-p pseudotile toggle
+# focus
+hc keybind Control-Tab   cycle_monitor
+hc keybind $Mod-Tab         cycle_all +1
+hc keybind $Mod-Shift-Tab   cycle_all -1
+hc keybind $Mod-c cycle
+# mouse
+hc mouseunbind --all
+hc mousebind $Mod-Button1 move
+hc mousebind $Mod-Button2 zoom
+hc mousebind $Mod-Button3 resize
+
+
+hc attr theme.tiling.reset 1
+hc attr theme.floating.reset 1
+hc set always_show_frame 0
+hc set frame_border_width 2
+hc set frame_border_inner_width 0
+hc set frame_transparent_width 0
+hc set window_border_width 2
+hc set window_border_inner_width 0
+hc set frame_gap 6
+hc set frame padding 0
+hc set window_gap 4 
+hc set smart_frame_surroundings 1
+hc set smart_window_surroundings 1
+hc set frame_bg_transparent 1
+hc set frame_border_active_color $orange
+hc set frame_border_normal_color $blue
+hc set frame_border_inner_color $black
+#hc set frame_bg_active_color $red
+#hc set frame_bg_normal_color $white
+hc set window_border_active_color $orange
+hc set window_border_normal_color $black
+hc set window_border_urgent_color $green
+
+hc set default_frame_layout 3
+
+
+# tags
+tag_names=( work browser term mail chat stuff stuff2 )
+tag_keys=( {1..9} 0 )
+
+# tags want be fetched form the other monitor. instead the monitor showing the tag will be focused
+hc set swap_monitors_to_get_tag 1
+hc keybind "$Mod-Control-Shift-2" focus_monitor 1
+hc keybind "$Mod-Control-Shift-1" focus_monitor 0
+hc keybind "$Mod-Control-$key" chain , set swap_monitors_to_get_tag 1, use_index "$i", set swap_monitors_to_get_tag 0
+hc rename default "${tag_names[0]}" || true
+for i in ${!tag_names[@]} ; do
+    hc add "${tag_names[$i]}"
+    key="${tag_keys[$i]}"
+    if ! [ -z "$key" ] ; then
+        hc keybind "$Mod-Control-$key" chain , set swap_monitors_to_get_tag 0, use_index "$i" , set swap_monitors_to_get_tag 1
+        hc keybind "$Mod-$key" use_index "$i"
+        hc keybind "$Mod-Shift-$key" move_index "$i"
+    fi
+done
+hc unrule -F
+hc rule focus=on # normally focus new clients
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+
+
+
+# do multi monitor setup here, e.g.:
+hc detect_monitors
+# find the panel
+panel=~/.config/herbstluftwm/panel.sh
+[ -x "$panel" ] 
+$panel &
+
+if hc silent new_attr bool my_not_first_autostart ; then
+   $autostartPrograms &
+fi
+# unlock, just to be sure
+hc unlock
