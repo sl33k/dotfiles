@@ -1,5 +1,4 @@
 ##DPI
-Xft.dpi: 221
 Xft.antialias: 1
 ##Terminal
 URxvt.saveLines: 1000
