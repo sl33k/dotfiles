@@ -1,6 +1,5 @@
 " A minimal vimrc for new vim users to start with.
 "
-" Referenced here: http://vimuniversity.com/samples/your-first-vimrc-should-be-nearly-empty
 "
 " Original Author:	     Bram Moolenaar <Bram@vim.org>
 " Made more minimal by:  Ben Orenstein
