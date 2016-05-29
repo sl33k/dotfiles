@@ -4,6 +4,7 @@ used="color4"
 urgent="color5"
 viewed="color6"
 empty="color7"
+other_mon="color8"
 
 hc_output=$(herbstclient tag_status);
 tag_array=($hc_output);
@@ -18,6 +19,9 @@ for ((i=0;i<tag_count;i++)); do
     elif [[ $tag =~ ^\+ ]]; then
         #viewed
         color=$viewed;
+    elif [[ $tag =~ ^\- ]]; then
+        #other monitor
+        color=$other_mon
     elif [[ $tag =~ ^: ]]; then
         #used
         color=$used;

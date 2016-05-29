@@ -13,6 +13,7 @@ execOnTag=/home/sl33k/.config/herbstluftwm/exec_on_tag.sh
 
 ###BROWSER
 $execOnTag 'browser' firefox
-
+xscreensaver -no-splash &
+xss-lock -- xscreensaver-command -lock &
 
 
