@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/etc/netctl'
-let g:netrw_dirhist_2='/home/sl33k/.config/qtile'
-let g:netrw_dirhist_3='/home/sl33k/.oh-my-zsh'
-let g:netrw_dirhist_4='/home/sl33k/.gnupg'
-let g:netrw_dirhist_5='/home/sl33k/.password-store'
-let g:netrw_dirhist_6='/home/sl33k/.password-store/.git'
-let g:netrw_dirhist_7='/home/sl33k/.password-store'
