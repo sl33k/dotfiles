@@ -21,19 +21,20 @@ conky.config = {
 color0 = base02,
 color1 = base00,
 color2 = blue,
-color8 = cyan,
+color9 = cyan,
 -- view tags
 color3 = orange, --active
 color4 = blue, -- used
 color5 = red, -- urgent
 color6 = orange, -- viewed
 color7 = base01, -- empty
+color8 = green, -- other monitor 
 -- Use double buffering (eliminates flickering)
 
 double_buffer = true,
 
 -- Run conky in the background
-background = false,
+background = true,
 
 -- Update interval in seconds
 update_interval = 1.0,

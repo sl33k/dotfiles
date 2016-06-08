@@ -52,7 +52,6 @@ hc keybind $Mod-d spawn urxvt
 #hc keybind $Mod-space spawn dmenu_run -fn "-xos4-terminus-medium-r-*-*-14-*" -nb "#000000" -nf "#FFFFFF" -sb "#000000" -sf "#FF0000"
 hc keybind $Mod-space spawn dmenu_run -fn "xft:DejaVu\ Sans\ Mono\ for\ Powerline:size=8" -nb $base03 -nf $blue -sb $base02 -sf $orange -i
 hc keybind $Mod-Control-s spawn systemctl suspend
-hc keybind $Mod-s spawn bash ~/.config/herbstluftwm/dpmstoggle.sh
 # basic movement
 # focusing clients
 #hc keybind $Mod-Left  focus left
