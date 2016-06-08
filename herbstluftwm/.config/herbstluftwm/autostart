@@ -50,7 +50,7 @@ hc keybind $Mod-a spawn firefox
 hc keybind $Mod-s spawn zathura
 hc keybind $Mod-d spawn urxvt
 #hc keybind $Mod-space spawn dmenu_run -fn "-xos4-terminus-medium-r-*-*-14-*" -nb "#000000" -nf "#FFFFFF" -sb "#000000" -sf "#FF0000"
-hc keybind $Mod-space spawn dmenu_run -fn "xft:DejaVu\ Sans\ Mono\ for\ Powerline:size=8" -nb $base03 -nf $blue -sb $base02 -sf $orange -i
+hc keybind $Mod-space spawn dmenu_run -fn "xft:DejaVu\ Sans\ Mono\ for\ Powerline:size=10" -nb $base03 -nf $blue -sb $base02 -sf $orange -i
 hc keybind $Mod-Control-s spawn systemctl suspend
 # basic movement
 # focusing clients
