@@ -26,6 +26,8 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/nerdTree'
+Plugin 'scrooloose/nerdcommenter'
 
 " finish Plugins
 call vundle#end()
@@ -52,6 +54,10 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+"Plugin SETTINGS
+" Use YCM as code completer with eclim
+let g:EclimCompletionMethod = 'omnifunc'
+map <C-N> :NERDTreeToggle<CR>
 
 " THEMING
 " vim-solarized
@@ -99,7 +105,11 @@ au Filetype perl nmap <F3> :Perl<CR>
 "shortcut for normal mode to (elevated) perl
 au Filetype perl nmap <C-F3> :SuPerl<CR>
 
-nnoremap <C-J> <C-W><C-J> "Ctrl-j to move down a split  
-nnoremap <C-K> <C-W><C-K> "Ctrl-k to move up a split  
-nnoremap <C-L> <C-W><C-L> "Ctrl-l to move    right a split  
-nnoremap <C-H> <C-W><C-H> "Ctrl-h to move left a split  
+"Ctrl-j to move down a split  
+nnoremap <C-J> <C-W><C-J> 
+ "Ctrl-k to move up a split  
+nnoremap <C-K> <C-W><C-K>
+"Ctrl-l to move    right a split  
+nnoremap <C-L> <C-W><C-L> 
+"Ctrl-h to move left a split  
+nnoremap <C-H> <C-W><C-H> 
