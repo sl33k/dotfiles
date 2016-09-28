@@ -103,7 +103,8 @@ hc mouseunbind --all
 hc mousebind $Mod-Button1 move
 hc mousebind $Mod-Button2 zoom
 hc mousebind $Mod-Button3 resize
-
+#left handed mouse
+xmodmap -e "pointer 3 2 1"
 
 hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
