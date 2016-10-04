@@ -28,6 +28,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdTree'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'raimondi/delimitmate'
 
 " finish Plugins
 call vundle#end()
@@ -57,7 +59,14 @@ set expandtab
 "Plugin SETTINGS
 " Use YCM as code completer with eclim
 let g:EclimCompletionMethod = 'omnifunc'
+" Nerd Tree Stuff
+" Bind Control-N to nerd tree
 map <C-N> :NERDTreeToggle<CR>
+" auto open nerdtree
+autocmd vimenter * NERDTree
+autocmd vimenter * wincmd p
+" auto close if the only tab left open is nerd tree
+autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " THEMING
 " vim-solarized
