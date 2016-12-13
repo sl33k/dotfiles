@@ -31,7 +31,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'raimondi/delimitmate'
 Plugin 'pangloss/vim-javascript'
-
+Plugin 'vim-perl/vim-perl'
 " finish Plugins
 call vundle#end()
 
@@ -39,7 +39,7 @@ call vundle#end()
 " SETTINGS
 " This must be first, because it changes other options as a side effect.
 set nocompatible
-"fix O taking a long time
+" FIX O takes a long since the OS is waiting for escape sequences
 set noesckeys
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
@@ -59,17 +59,11 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-"Plugin SETTINGS
-" Use YCM as code completer with eclim
-let g:EclimCompletionMethod = 'omnifunc'
-" Nerd Tree Stuff
-" Bind Control-N to nerd tree
-map <C-N> :NERDTreeToggle<CR>
-" auto open nerdtree
-autocmd vimenter * NERDTree
-autocmd vimenter * wincmd p
-" auto close if the only tab left open is nerd tree
+" PLUGIN SETTINGS
+" auto close nerdtree if its the only buffer open
 autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Vim Airline Powerline fonts
+let g:airline_powerline_fonts = 1
 
 " THEMING
 " vim-solarized
@@ -78,44 +72,8 @@ colorscheme solarized
 set t_Co=16
 set cursorline
 
-" Vim Airline
-let g:airline_powerline_fonts = 1
-
-" FUNCTIONS
-
-":PerlTidyVisual command to run perltidy on visual selection || entire buffer"
-command -range=% -nargs=* PerlTidyVisual <line1>,<line2>!perltidy
-":Perl command to run current file with perl
-command Perl execute "!perl %"
-":SuPerl command to run current file with elevated perl
-command SuPerl execute "!sudo perl %"
-
-":PerlTidy on entire buffer and return cursor to (approximate) original position"
-fun PerlTidy()
-    let l = line(".")
-    let c = col(".")
-    :PerlTidyVisual
-    call cursor(l, c)
-endfun
-
-fun PerlRun()
-    :silent !clear
-    :Perl
-endfun
 
 " BINDINGS
-"au => autocmd
-"shortcut for normal mode to run on entire buffer then return to current line"
-au Filetype perl nmap <F2> :call PerlTidy()<CR>
-
-"shortcut for visual mode to run on the the current visual selection"
-au Filetype perl vmap <F2> :PerlTidyVisual<CR>
-
-"shortcut for normal mode to (non-elevated) perl 
-au Filetype perl nmap <F3> :Perl<CR>
-
-"shortcut for normal mode to (elevated) perl
-au Filetype perl nmap <C-F3> :SuPerl<CR>
 
 "Ctrl-j to move down a split  
 nnoremap <C-J> <C-W><C-J> 
