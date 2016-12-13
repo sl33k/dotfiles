@@ -107,6 +107,7 @@ hc mousebind $Mod-Button3 resize
 xmodmap -e "clear lock" -e "keycode 0x9 = Caps_Lock" -e "keycode 0x42 = Escape" -e "add lock = Caps_Lock"
 
 
+
 hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
 hc set always_show_frame 0
@@ -167,6 +168,13 @@ panel=~/.config/herbstluftwm/panel.sh
 [ -x "$panel" ] 
 $panel &
 
+#platform specific configuration
+ext_conf=~/.config/herbstluftwm/autostart_platform
+if [ -x "$ext_conf" ] ; then
+ $ext_conf &
+fi
+
+#autostart of programs
 if hc silent new_attr bool my_not_first_autostart ; then
    $autostartPrograms &
 fi
