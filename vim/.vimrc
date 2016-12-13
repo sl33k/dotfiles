@@ -33,8 +33,6 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'raimondi/delimitmate'
 Plugin 'vim-perl/vim-perl'
-
-
 " finish Plugins
 call vundle#end()
 
@@ -42,6 +40,8 @@ call vundle#end()
 " SETTINGS
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+" FIX O takes a long since the OS is waiting for escape sequences
+set noesckeys
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
 " Switch syntax highlighting on
@@ -60,6 +60,11 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" PLUGIN SETTINGS
+" auto close nerdtree if its the only buffer open
+autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Vim Airline Powerline fonts
+let g:airline_powerline_fonts = 1
 
 " THEMING
 " vim-solarized
@@ -67,9 +72,6 @@ set background=dark
 colorscheme solarized
 set t_Co=16
 set cursorline
-
-" Vim Airline
-let g:airline_powerline_fonts = 1
 
 " FUNCTIONS
 
