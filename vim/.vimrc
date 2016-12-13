@@ -30,6 +30,7 @@ Plugin 'scrooloose/nerdTree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-fugitive'
 Plugin 'raimondi/delimitmate'
+Plugin 'pangloss/vim-javascript'
 
 " finish Plugins
 call vundle#end()
@@ -38,6 +39,8 @@ call vundle#end()
 " SETTINGS
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+"fix O taking a long time
+set noesckeys
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
 " Switch syntax highlighting on
