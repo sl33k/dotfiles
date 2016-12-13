@@ -26,6 +26,14 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'pangloss/vim-javascript'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'raimondi/delimitmate'
+Plugin 'vim-perl/vim-perl'
+
 
 " finish Plugins
 call vundle#end()
@@ -65,41 +73,14 @@ let g:airline_powerline_fonts = 1
 
 " FUNCTIONS
 
-":PerlTidyVisual command to run perltidy on visual selection || entire buffer"
-command -range=% -nargs=* PerlTidyVisual <line1>,<line2>!perltidy
-":Perl command to run current file with perl
-command Perl execute "!perl %"
-":SuPerl command to run current file with elevated perl
-command SuPerl execute "!sudo perl %"
+"Ctrl-j to move down a split  
+nnoremap <C-J> <C-W><C-J> 
+nnoremap <C-K> <C-W><C-K> 
+nnoremap <C-L> <C-W><C-L> 
+nnoremap <C-H> <C-W><C-H> 
 
-":PerlTidy on entire buffer and return cursor to (approximate) original position"
-fun PerlTidy()
-    let l = line(".")
-    let c = col(".")
-    :PerlTidyVisual
-    call cursor(l, c)
-endfun
-
-fun PerlRun()
-    :silent !clear
-    :Perl
-endfun
-
-" BINDINGS
-"au => autocmd
-"shortcut for normal mode to run on entire buffer then return to current line"
-au Filetype perl nmap <F2> :call PerlTidy()<CR>
-
-"shortcut for visual mode to run on the the current visual selection"
-au Filetype perl vmap <F2> :PerlTidyVisual<CR>
-
-"shortcut for normal mode to (non-elevated) perl 
-au Filetype perl nmap <F3> :Perl<CR>
-
-"shortcut for normal mode to (elevated) perl
-au Filetype perl nmap <C-F3> :SuPerl<CR>
-
-nnoremap <C-J> <C-W><C-J> "Ctrl-j to move down a split  
-nnoremap <C-K> <C-W><C-K> "Ctrl-k to move up a split  
-nnoremap <C-L> <C-W><C-L> "Ctrl-l to move    right a split  
-nnoremap <C-H> <C-W><C-H> "Ctrl-h to move left a split  
+"KEYBINDINGS
+"Open NerdTREE on ,ne
+let mapleader = ","
+nmap <leader>ne :NERDTreeToggle<cr>
+nmap <leader>nf :NERDTreeFocus<cr>
