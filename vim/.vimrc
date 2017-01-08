@@ -33,6 +33,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'raimondi/delimitmate'
 Plugin 'vim-perl/vim-perl'
+Plugin 'leafgarland/typescript-vim'
 
 
 " finish Plugins
