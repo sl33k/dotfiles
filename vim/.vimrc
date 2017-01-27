@@ -22,7 +22,6 @@ Plugin 'VundleVim/Vundle.vim'
 
 " User Plugins
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -32,6 +31,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'raimondi/delimitmate'
 Plugin 'pangloss/vim-javascript'
 Plugin 'vim-perl/vim-perl'
+Plugin 'rdnetto/YCM-Generator'
+Plugin 'jeaye/color_coded'
 " finish Plugins
 call vundle#end()
 
