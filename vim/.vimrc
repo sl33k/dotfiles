@@ -22,7 +22,6 @@ Plugin 'VundleVim/Vundle.vim'
 
 " User Plugins
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -35,8 +34,8 @@ Plugin 'raimondi/delimitmate'
 Plugin 'vim-perl/vim-perl'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'Chiel92/vim-autoformat'
-
-
+Plugin 'rdnetto/YCM-Generator'
+Plugin 'jeaye/color_coded'
 " finish Plugins
 call vundle#end()
 
@@ -69,8 +68,6 @@ set expandtab
 autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Vim Airline Powerline fonts
 let g:airline_powerline_fonts = 1
-" Supertab
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " THEMING
 " vim-solarized
@@ -94,3 +91,4 @@ nmap <leader>ne :NERDTreeToggle<cr>
 nmap <leader>nf :NERDTreeFocus<cr>
 "Autoformat binding
 nmap <leader>ff :Autoformat<cr>
+

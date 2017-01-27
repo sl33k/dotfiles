@@ -1,0 +1,11 @@
+#!/bin/bash
+
+hc() {
+  herbstclient "$@" 
+}
+
+# Use this file for platform specific customization of herbstluft
+
+#left handed mouse
+xmodmap -e "pointer = 3 2 1"
+

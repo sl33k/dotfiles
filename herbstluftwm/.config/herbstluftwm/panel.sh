@@ -1,7 +1,7 @@
 #!/bin/bash
 panelfolder=
 trap 'herbstclient emit_hook quit_panel' TERM
-herbstclient pad 0 60 0 0
+herbstclient pad 0 30 0 0
 herbstclient emit_hook quit_panel
 compton &
 ~/.config/herbstluftwm/conky_patched -c ~/.config/herbstluftwm/conkyrc &
