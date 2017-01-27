@@ -1,10 +1,10 @@
 " A minimal vimrc for new vim users to start with.
 "
 "
-" Original Author:	     Bram Moolenaar <Bram@vim.org>
+" Original Author:       Bram Moolenaar <Bram@vim.org>
 " Made more minimal by:  Ben Orenstein
 " Modified by :          Ben McCormick
-" Last change:	         2014 June 8
+" Last change:           2014 June 8
 "
 " To use it, copy it to
 "  for Unix based systems (including OSX and Linux):  ~/.vimrc
@@ -34,6 +34,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'raimondi/delimitmate'
 Plugin 'vim-perl/vim-perl'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'Chiel92/vim-autoformat'
 
 
 " finish Plugins
@@ -68,6 +69,8 @@ set expandtab
 autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Vim Airline Powerline fonts
 let g:airline_powerline_fonts = 1
+" Supertab
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " THEMING
 " vim-solarized
@@ -78,14 +81,16 @@ set cursorline
 
 " FUNCTIONS
 
-"Ctrl-j to move down a split  
-nnoremap <C-J> <C-W><C-J> 
-nnoremap <C-K> <C-W><C-K> 
-nnoremap <C-L> <C-W><C-L> 
-nnoremap <C-H> <C-W><C-H> 
+" easy navigation with CTRL+h,j,k,l
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 "KEYBINDINGS
 "Open NerdTREE on ,ne
 let mapleader = ","
 nmap <leader>ne :NERDTreeToggle<cr>
 nmap <leader>nf :NERDTreeFocus<cr>
+"Autoformat binding
+nmap <leader>ff :Autoformat<cr>
