@@ -16,7 +16,6 @@
 " Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
@@ -68,6 +67,10 @@ set expandtab
 autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Vim Airline Powerline fonts
 let g:airline_powerline_fonts = 1
+"YCM Settings
+" Auto Close preview
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_confirm_extra_conf = 0
 
 " THEMING
 " vim-solarized
