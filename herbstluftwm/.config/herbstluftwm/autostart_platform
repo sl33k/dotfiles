@@ -9,3 +9,8 @@ hc() {
 #left handed mouse
 xmodmap -e "pointer = 3 2 1"
 
+# compton
+pkill compton
+compton -cCzG -t-3 -l-5 -r4 -b \
+ --config /dev/null --backend xrender \
+ --unredir-if-possible -i 0.85  

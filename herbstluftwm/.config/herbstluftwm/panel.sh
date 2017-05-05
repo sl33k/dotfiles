@@ -3,7 +3,7 @@ script_path="`dirname \"$0\"`"
 source "$script_path/solarized_rc"
 
 for monitor in "$@"; do
-    herbstclient pad $monitor 24
+    herbstclient pad $monitor 20
 done
 ~/.config/herbstluftwm/wallpaper.sh & 
 yabar 2>&1 > /dev/null &
