@@ -13,30 +13,29 @@
 "  If you don't understand a setting in here, just type ':h setting'.
 " Use Vim settings, rather than Vi settings (much better!).
 
-" Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" plug-vim
+" increase timeout for ycm
+let g:plug_timeout = 120
+call plug#begin('~/.vim/plugged')
 
 " User Plugins
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'pangloss/vim-javascript'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'raimondi/delimitmate'
-Plugin 'vim-perl/vim-perl'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'Chiel92/vim-autoformat'
-Plugin 'rdnetto/YCM-Generator'
-Plugin 'jeaye/color_coded'
+Plug 'altercation/vim-colors-solarized'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdcommenter'
+Plug 'pangloss/vim-javascript'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'raimondi/delimitmate'
+Plug 'vim-perl/vim-perl'
+Plug 'leafgarland/typescript-vim'
+Plug 'Chiel92/vim-autoformat'
+Plug 'rdnetto/YCM-Generator'
+Plug 'jeaye/color_coded', { 'do': 'mkdir build && cd build && cmake ../ && make && make install'}
 " finish Plugins
-call vundle#end()
+call plug#end()
 
 
 " SETTINGS
@@ -54,6 +53,10 @@ filetype plugin indent on
 set number
 " Show relative line numbers
 set relativenumber
+"allow incremental search
+set incsearch
+"highlight search results
+set hlsearch
 " Allow hidden buffers, don't limit to 1 file per window/split
 set hidden
 " Setting the tabstop to 4 Spaces
