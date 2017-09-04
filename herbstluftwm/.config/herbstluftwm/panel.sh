@@ -7,7 +7,8 @@ for monitor in "$@"; do
 done
 ~/.config/herbstluftwm/wallpaper.sh & 
 yabar 2>&1 > /dev/null &
-trayer --edge top --align right --width 150 --widthtype pixel --height 20 --monitor 1 --tint "0x${sol_base03:1}" --alpha 0  --SetDockType true
+sleep 2
+stalonetray -bg "#${sol_base03:1}" --dockapp-mode simple --icon-size 20 --geometry "5x1-170+0" --icon-gravity NE --window-strut right &
 herbstclient --wait '^(quit_panel|reload).*'
 
 pkill yabar
