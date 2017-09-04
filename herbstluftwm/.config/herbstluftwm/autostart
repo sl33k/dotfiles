@@ -11,7 +11,8 @@ black='#000000' #black
 white='#AAAAAA' #white
 
 #script locations
-autostartPrograms=~/.config/herbstluftwm/programs.sh
+autostartPrograms="$script_path/programs.sh"
+autostartServices="$script_path/services.sh"
 
 
 hc() {
@@ -133,19 +134,20 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 # do multi monitor setup here, e.g.:
 hc detect_monitors
 # find the panel
-panel=~/.config/herbstluftwm/panel.sh
+panel="$script_path/panel.sh"
 [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
 monitors=$(herbstclient list_monitors | cut -d: -f1)
 "$panel" ${monitors[@]} &
 
 #platform specific configuration
-ext_conf=~/.config/herbstluftwm/autostart_platform
+ext_conf="$script_path/autostart_platform"
 if [ -x "$ext_conf" ] ; then
     $ext_conf &
 fi
 
 #autostart of programs
 if hc silent new_attr bool my_not_first_autostart ; then
+    $autostartServices &
     $autostartPrograms &
 fi
 # unlock, just to be sure
