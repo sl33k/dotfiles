@@ -27,6 +27,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdcommenter'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'raimondi/delimitmate'
 Plug 'vim-perl/vim-perl'
@@ -34,6 +35,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'rdnetto/YCM-Generator'
 Plug 'jeaye/color_coded', { 'do': 'mkdir build && cd build && cmake ../ && make && make install'}
+
 " finish Plugins
 call plug#end()
 
@@ -74,6 +76,9 @@ let g:airline_powerline_fonts = 1
 " Auto Close preview
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_confirm_extra_conf = 0
+"vim-jsx settings
+"also enable on .js files instead of on .jsx only
+let g:jsx_ext_required = 0
 
 " THEMING
 " vim-solarized
