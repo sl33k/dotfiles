@@ -28,7 +28,7 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-w close
 
 #hc keybind $Mod-Return spawn urxvt -e "zsh -c '/home/sl33k/.tmx.sh term'"
-hc keybind $Mod-Return spawn "$HOME/local/bin/st"
+hc keybind $Mod-Return spawn st
 hc keybind $Mod-a spawn firefox
 hc keybind $Mod-s spawn zathura
 hc keybind $Mod-d spawn "$HOME/local/bin/st"
