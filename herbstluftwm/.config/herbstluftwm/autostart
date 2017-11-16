@@ -28,10 +28,10 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-w close
 
 #hc keybind $Mod-Return spawn urxvt -e "zsh -c '/home/sl33k/.tmx.sh term'"
-hc keybind $Mod-Return spawn st
+hc keybind $Mod-Return spawn st 
 hc keybind $Mod-a spawn firefox
 hc keybind $Mod-s spawn zathura
-hc keybind $Mod-d spawn "$HOME/local/bin/st"
+hc keybind $Mod-d spawn xterm 
 hc keybind $Mod-space spawn dmenu_run -fn "xft:Hack:size=10" -nb $sol_base03 -nf $sol_blue -sb $sol_base02 -sf $sol_orange -i
 hc keybind $Mod-Shift-space spawn passmenu -fn "xft:Hack:size=10" -nb $sol_base03 -nf $sol_blue -sb $sol_base02 -sf $sol_orange -i
 hc keybind $Mod-Control-s spawn systemctl suspend
@@ -41,6 +41,9 @@ hc keybind $Mod-h     focus left
 hc keybind $Mod-j     focus down
 hc keybind $Mod-k     focus up
 hc keybind $Mod-l     focus right
+# cycle through tags
+hc keybind $Mod-period use_index +1 --skip-visible
+hc keybind $Mod-comma  use_index -1 --skip-visible
 # moving clients
 hc keybind $Mod-Shift-h     shift left
 hc keybind $Mod-Shift-j     shift down
@@ -125,7 +128,7 @@ for i in ${!tag_names[@]} ; do
 done
 hc unrule -F
 hc rule focus=on # normally focus new clients
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 

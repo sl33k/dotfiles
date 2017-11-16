@@ -35,6 +35,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'jeaye/color_coded', { 'do': 'mkdir build && cd build && cmake ../ && make && make install'}
+Plug 'airblade/vim-gitgutter'
 
 " finish Plugins
 call plug#end()
@@ -79,6 +80,9 @@ let g:ycm_confirm_extra_conf = 0
 "vim-jsx settings
 "also enable on .js files instead of on .jsx only
 let g:jsx_ext_required = 0
+"vim-gitgutter settings
+"update the vim refresh rate for a smoother experience
+set updatetime=250
 
 " THEMING
 " vim-solarized
