@@ -1,7 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/sl33k/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -17,7 +17,10 @@ source $ZSH/oh-my-zsh.sh
 #add perlbrew path to PATH
 export PATH="$PATH:$HOME/local/bin"
 #perlbrew completion
-source ~/perl5/perlbrew/etc/bashrc
+if [[ -d ~/perl5/perlbrew/etc/bashrc ]]
+then
+    source ~/perl5/perlbrew/etc/bashrc
+fi
 
 # Set Language manually 
  export LANG=en_US.UTF-8
@@ -32,11 +35,13 @@ export NVM_DIR="$HOME/.nvm"
 
 #keychain, only run when inside x console
 if xhost &> /dev/null
-then   
+then
     eval $(keychain --agents ssh,gpg --quiet --eval id_rsa id_ecdsa 54D705CFA598350FD65894BDC09A4FE22EE94CB4)
 else
-    exec startx
+    if [[ -f /usr/bin/herbstluftwm  && ! -f /usr/bin/ligthdm ]]
+    then
+       exec startx
+    fi
 fi
 
-#start x automatically when
 
