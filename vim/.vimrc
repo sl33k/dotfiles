@@ -33,7 +33,7 @@ Plug 'raimondi/delimitmate'
 Plug 'vim-perl/vim-perl'
 Plug 'leafgarland/typescript-vim'
 Plug 'Chiel92/vim-autoformat'
-Plug 'rdnetto/YCM-Generator'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'jeaye/color_coded', { 'do': 'mkdir build && cd build && cmake ../ && make && make install'}
 
 " finish Plugins
