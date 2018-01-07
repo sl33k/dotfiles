@@ -21,6 +21,7 @@ call plug#begin('~/.vim/plugged')
 " User Plugins
 Plug 'altercation/vim-colors-solarized'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
+Plug 'bling/vim-bufferline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
@@ -36,6 +37,8 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'jeaye/color_coded', { 'do': 'mkdir build && cd build && cmake ../ && make && make install'}
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround' 
+Plug 'ctrlpvim/ctrlp.vim'
 
 " finish Plugins
 call plug#end()
@@ -63,16 +66,18 @@ set hlsearch
 " Allow hidden buffers, don't limit to 1 file per window/split
 set hidden
 " Setting the tabstop to 4 Spaces
-filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
 set expandtab
+autocmd FileType typescript setl sw=2 ts=2 sts=2 et 
 
 " PLUGIN SETTINGS
 " auto close nerdtree if its the only buffer open
 autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Vim Airline Powerline fonts
 let g:airline_powerline_fonts = 1
+" Vim Airline Theme
+let g:airline_theme='solarized'
 "YCM Settings
 " Auto Close preview
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -83,10 +88,15 @@ let g:jsx_ext_required = 0
 "vim-gitgutter settings
 "update the vim refresh rate for a smoother experience
 set updatetime=250
+"ctrlp settings
+" set invocation command to <leader><Space>
+let g:ctrlp_map = '<leader><Space>'
+"dont show vim-bufferline in command line
+let g:bufferline_echo = 0
 
 " THEMING
 " vim-solarized
-set background=dark
+set background=light
 colorscheme solarized
 set t_Co=16
 set cursorline
@@ -106,4 +116,6 @@ nmap <leader>ne :NERDTreeToggle<cr>
 nmap <leader>nf :NERDTreeFocus<cr>
 "Autoformat binding
 nmap <leader>ff :Autoformat<cr>
+"CtrlP buffer searching
+nmap <leader>b :CtrlPBuffer<cr>
 
