@@ -1,2 +1,4 @@
 autostart_platform
 dconf/
+ssh/.ssh/id_*
+ssh/.ssh/known_hosts
