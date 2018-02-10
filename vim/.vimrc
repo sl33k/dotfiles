@@ -69,7 +69,10 @@ set hidden
 set tabstop=4
 set shiftwidth=4
 set expandtab
-autocmd FileType typescript setl sw=2 ts=2 sts=2 et 
+"except for typescript files
+autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
+"disable expandtab for makefiles
+autocmd Filetype make setlocal noet
 
 " PLUGIN SETTINGS
 " auto close nerdtree if its the only buffer open
