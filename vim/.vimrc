@@ -39,6 +39,7 @@ Plug 'jeaye/color_coded', { 'do': 'mkdir build && cd build && cmake ../ && make 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround' 
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'morhetz/gruvbox'
 
 " finish Plugins
 call plug#end()
@@ -80,7 +81,7 @@ autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTa
 " Vim Airline Powerline fonts
 let g:airline_powerline_fonts = 1
 " Vim Airline Theme
-let g:airline_theme='solarized'
+let g:airline_theme='gruvbox'
 "YCM Settings
 " Auto Close preview
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -98,10 +99,14 @@ let g:ctrlp_map = '<leader><Space>'
 let g:bufferline_echo = 0
 
 " THEMING
-" vim-solarized
-set background=light
-colorscheme solarized
-set t_Co=16
+" gruvbox
+set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
+set t_8b=[48;2;%lu;%lu;%lum        " set background color
+set background=dark
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_sign_column = 'bg0'
+colorscheme gruvbox
+set termguicolors
 set cursorline
 
 " FUNCTIONS
