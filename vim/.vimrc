@@ -16,6 +16,11 @@
 " plug-vim
 " increase timeout for ycm
 let g:plug_timeout = 120
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 call plug#begin('~/.vim/plugged')
 
 " User Plugins
@@ -40,6 +45,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround' 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'morhetz/gruvbox'
+Plug 'Konfekt/FastFold'
+Plug 'lervag/vimtex'
 
 " finish Plugins
 call plug#end()
@@ -49,7 +56,9 @@ call plug#end()
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 " FIX O takes a long since the OS is waiting for escape sequences
-set noesckeys
+" set noesckeys
+" make sure file enconding is utf-8 otherwise youcompleteme doesnt work
+set encoding=utf-8
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
 " Switch syntax highlighting on
@@ -74,6 +83,20 @@ set expandtab
 autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
 "disable expandtab for makefiles
 autocmd Filetype make setlocal noet
+" enable folding
+set foldenable "but not on file open
+" dont collapse on open
+set foldlevelstart=99
+" syntax is best
+set foldmethod=syntax
+" dont create subfolds (if/for/etc.)
+set foldnestmax=1
+" autoclose on exit
+set foldclose=all
+" dont fold anything below 10 lines
+set foldminlines=10
+" nicer folder marker
+set foldmarker====,===
 
 " PLUGIN SETTINGS
 " auto close nerdtree if its the only buffer open
@@ -97,6 +120,11 @@ set updatetime=250
 let g:ctrlp_map = '<leader><Space>'
 "dont show vim-bufferline in command line
 let g:bufferline_echo = 0
+" fast fold settings
+nmap zuz <Plug>(FastFoldUpdate)
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 
 " THEMING
 " gruvbox
@@ -120,6 +148,7 @@ nnoremap <C-H> <C-W><C-H>
 "KEYBINDINGS
 "Open NerdTREE on ,ne
 let mapleader = ","
+let maplocalleader= ","
 nmap <leader>ne :NERDTreeToggle<cr>
 nmap <leader>nf :NERDTreeFocus<cr>
 "Autoformat binding
