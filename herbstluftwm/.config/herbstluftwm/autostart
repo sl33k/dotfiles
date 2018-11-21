@@ -77,9 +77,10 @@ hc mouseunbind --all
 hc mousebind $Mod-Button1 move
 hc mousebind $Mod-Button2 zoom
 hc mousebind $Mod-Button3 resize
-#swap esc &  caps_lock
-xmodmap -e "clear lock" -e "keycode 0x9 = Caps_Lock" -e "keycode 0x42 = Escape" -e "add lock = Caps_Lock"
-
+# media keys
+hc keybind XF86AudioNext spawn playerctl next
+hc keybind XF86AudioPrev spawn playerctl previous
+hc keybind XF86AudioPlay spawn playerctl play-pause
 
 
 hc attr theme.tiling.reset 1
