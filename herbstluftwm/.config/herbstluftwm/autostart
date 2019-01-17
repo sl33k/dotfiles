@@ -6,7 +6,7 @@
 # theme
 # solarized
 script_path="`dirname \"$0\"`"
-source "$script_path/solarized_rc"
+source "$script_path/colors_rc"
 black='#000000' #black
 white='#AAAAAA' #white
 
@@ -32,8 +32,8 @@ hc keybind $Mod-Return spawn st
 hc keybind $Mod-a spawn firefox
 hc keybind $Mod-s spawn zathura
 hc keybind $Mod-d spawn xterm 
-hc keybind $Mod-space spawn dmenu_run -fn "xft:Hack:size=10" -nb $sol_base03 -nf $sol_blue -sb $sol_base02 -sf $sol_orange -i
-hc keybind $Mod-Shift-space spawn passmenu -fn "xft:Hack:size=10" -nb $sol_base03 -nf $sol_blue -sb $sol_base02 -sf $sol_orange -i
+hc keybind $Mod-space spawn dmenu_run -fn "xft:Hack:size=10" -nb $dark2 -nf $light4 -sb $dark4 -sf $light2 -i
+hc keybind $Mod-Shift-space spawn passmenu -fn "xft:Hack:size=10" -nb $dark2 -nf $light4 -sb $dark4 -sf $light2 -i
 hc keybind $Mod-Control-s spawn systemctl suspend
 # basic movement
 # focusing clients
@@ -77,10 +77,6 @@ hc mouseunbind --all
 hc mousebind $Mod-Button1 move
 hc mousebind $Mod-Button2 zoom
 hc mousebind $Mod-Button3 resize
-#swap esc &  caps_lock
-xmodmap -e "clear lock" -e "keycode 0x9 = Caps_Lock" -e "keycode 0x42 = Escape" -e "add lock = Caps_Lock"
-
-
 
 hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
@@ -98,12 +94,12 @@ hc set smart_window_surroundings 1
 #hc set frame_bg_transparent 1
 hc set frame_active_opacity 100
 hc set frame_normal_opacity 50
-hc set frame_border_active_color $sol_blue
-hc set frame_border_normal_color $sol_blue
+hc set frame_border_active_color $faded_blue
+hc set frame_border_normal_color $faded_blue
 hc set frame_border_inner_color $black
-hc set window_border_active_color $sol_orange
-hc set window_border_normal_color $sol_green
-hc set window_border_urgent_color $sol_red
+hc set window_border_active_color $faded_orange
+hc set window_border_normal_color $faded_green
+hc set window_border_urgent_color $faded_red
 hc set default_frame_layout 3
 
 

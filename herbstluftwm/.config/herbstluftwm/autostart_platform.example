@@ -9,3 +9,5 @@ hc() {
 #left handed mouse
 xmodmap -e "pointer = 3 2 1"
 
+setxkbmap -rules evdev -model evdev -layout us -variant altgr-intl -option caps:escape
+
