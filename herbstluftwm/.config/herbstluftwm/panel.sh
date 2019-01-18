@@ -6,7 +6,7 @@ for monitor in "$@"; do
     herbstclient pad $monitor 20
 done
 ~/.config/herbstluftwm/wallpaper.sh & 
-yabar 2>&1 > /dev/null &
+$(/bin/bash -c 'yabar 2>&1 > /dev/null &')
 (sleep 3 && stalonetray -bg "#${base03:1}" --dockapp-mode simple --icon-size 20 --geometry "5x1+2250+0" --icon-gravity NE --window-strut right) &
 herbstclient --wait '^(quit_panel|reload).*'
 
