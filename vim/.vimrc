@@ -133,6 +133,11 @@ set updatetime=250
 "dont show vim-bufferline in command line
 let g:bufferline_echo = 0
 
+"syntastic settings
+let g:syntastic_cpp_clang_check_post_args = ""
+let g:syntastic_cpp_clang_tidy_post_args = ""
+let g:syntastic_cpp_checkers = ['clang_tidy', 'clang_check']
+
 " fast fold settings
 nmap zuz <Plug>(FastFoldUpdate)
 let g:fastfold_savehook = 1
