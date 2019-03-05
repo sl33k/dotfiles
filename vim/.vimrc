@@ -109,6 +109,8 @@ endif
 "" set correct undodir and enable undofile
 set undodir=~/.vim/undodir
 set undofile
+" enable mouse support in all modes
+set mouse=a
 
 " PLUGIN SETTINGS
 " auto close nerdtree if its the only buffer open
