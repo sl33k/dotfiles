@@ -25,7 +25,7 @@ call plug#begin('~/.vim/plugged')
 
 " User Plugins
 Plug 'altercation/vim-colors-solarized'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer --rust-completer' }
 Plug 'bling/vim-bufferline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
