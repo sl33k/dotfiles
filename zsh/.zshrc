@@ -13,36 +13,27 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-#add perlbrew path to PATH
-export PATH="$PATH:$HOME/local/bin"
-#perlbrew completion
-if [[ -d ~/perl5/perlbrew/etc/bashrc ]]
-then
-    source ~/perl5/perlbrew/etc/bashrc
-fi
-
-# Set Language manually 
- export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Set default editor
 export EDITOR='vim'
 
 
-# Node Version Manager startup
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-#keychain, only run when inside x console
-if xhost &> /dev/null
+if [ -d "$HOME/local/bin" ]
 then
-    eval $(keychain --agents ssh,gpg --quiet --eval id_rsa id_ecdsa 54D705CFA598350FD65894BDC09A4FE22EE94CB4)
-else
-    if [[ -f /usr/bin/herbstluftwm  && ! -f /usr/bin/ligthdm ]]
-    then
-       exec startx
-    fi
+    export PATH="$PATH:$HOME/local/bin"
 fi
 
+alias gcc='gcc-8'
+alias cc='gcc-8'
+alias g++='g++-8'
+alias c++='c++-8'
 
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+export PATH="/usr/local/Cellar/llvm/7.0.1/bin:$PATH"
+export PATH="/usr/local/Cellar/vim/8.1.0800/bin:$PATH"
+
+# opam configuration
+test -r /Users/sl33k/.opam/opam-init/init.zsh && . /Users/sl33k/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

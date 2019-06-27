@@ -13,46 +13,50 @@
 "  If you don't understand a setting in here, just type ':h setting'.
 " Use Vim settings, rather than Vi settings (much better!).
 
-" plug-vim
-" increase timeout for ycm
-let g:plug_timeout = 120
+"automatic plug installation
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+" plug-vim
+" increase timeout for ycm
+let g:plug_timeout = 180
 call plug#begin('~/.vim/plugged')
 
 " User Plugins
-Plug 'altercation/vim-colors-solarized'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer --rust-completer' }
+Plug 'morhetz/gruvbox'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer', 'for': ['c', 'cpp', 'javascript'] }
+Plug 'vim-syntastic/syntastic'
 Plug 'bling/vim-bufferline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/nerdcommenter'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'raimondi/delimitmate'
-Plug 'vim-perl/vim-perl'
-Plug 'leafgarland/typescript-vim'
-Plug 'Chiel92/vim-autoformat'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-Plug 'jeaye/color_coded', { 'do': 'mkdir build && cd build && cmake ../ && make && make install'}
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround' 
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'morhetz/gruvbox'
+Plug 'scrooloose/nerdcommenter'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'simeji/winresizer'
+Plug 'raimondi/delimitmate'
+Plug 'Chiel92/vim-autoformat'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'bfrg/vim-cpp-modern', { 'for': ['c', 'cpp'] }
+Plug 'vim-perl/vim-perl', { 'for': 'perl'}
+Plug 'pangloss/vim-javascript', { 'for': 'javascript'}
+Plug 'prettier/vim-prettier', { 'do': 'yarn install','for': ['javascript','typescript', 'css', 'less', 'scss', 'json','graphql', 'markdown', 'vue'] }
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'typescript'] }
+Plug 'stephpy/vim-yaml', { 'for': ['yaml']}
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript'}
 Plug 'Konfekt/FastFold'
-Plug 'lervag/vimtex'
 
 " finish Plugins
 call plug#end()
 
 
 " SETTINGS
+set enc=utf8
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 " FIX O takes a long since the OS is waiting for escape sequences
@@ -97,6 +101,16 @@ set foldclose=all
 set foldminlines=10
 " nicer folder marker
 set foldmarker====,===
+" persistent undo
+"" create dir if it does not exist
+if !isdirectory($HOME."/.vim/undodir/")
+    call mkdir($HOME."/.vim/undodir/", "p")
+endif
+"" set correct undodir and enable undofile
+set undodir=~/.vim/undodir
+set undofile
+" enable mouse support in all modes
+set mouse=a
 
 " PLUGIN SETTINGS
 " auto close nerdtree if its the only buffer open
@@ -105,6 +119,9 @@ autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTa
 let g:airline_powerline_fonts = 1
 " Vim Airline Theme
 let g:airline_theme='gruvbox'
+" airline + syntastic
+let g:airline#extensions#syntastic#enabled = 1
+
 "YCM Settings
 " Auto Close preview
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -115,11 +132,14 @@ let g:jsx_ext_required = 0
 "vim-gitgutter settings
 "update the vim refresh rate for a smoother experience
 set updatetime=250
-"ctrlp settings
-" set invocation command to <leader><Space>
-let g:ctrlp_map = '<leader><Space>'
 "dont show vim-bufferline in command line
 let g:bufferline_echo = 0
+
+"syntastic settings
+let g:syntastic_cpp_clang_check_post_args = ""
+let g:syntastic_cpp_clang_tidy_post_args = ""
+let g:syntastic_cpp_checkers = ['clang_tidy', 'clang_check']
+
 " fast fold settings
 nmap zuz <Plug>(FastFoldUpdate)
 let g:fastfold_savehook = 1
@@ -130,14 +150,59 @@ let g:vimtex_view_method = 'zathura'
 
 " THEMING
 " gruvbox
-set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
-set t_8b=[48;2;%lu;%lu;%lum        " set background color
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set background=dark
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_sign_column = 'bg0'
 colorscheme gruvbox
 set termguicolors
 set cursorline
+
+" winresizer
+let g:winresizer_finish_with_escape = 1
+"syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" c/cpp highlighting
+let g:cpp_simple_highlight = 1
+let g:cpp_member_variable_highlight = 1
+" ocaml merlin 
+" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+let s:opam_share_dir = system("opam config var share")
+let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+
+let s:opam_configuration = {}
+
+function! OpamConfOcpIndent()
+  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+endfunction
+let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+
+function! OpamConfOcpIndex()
+  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+endfunction
+let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+
+function! OpamConfMerlin()
+  let l:dir = s:opam_share_dir . "/merlin/vim"
+  execute "set rtp+=" . l:dir
+endfunction
+let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+for tool in s:opam_packages
+  " Respect package order (merlin should be after ocp-index)
+  if count(s:opam_available_tools, tool) > 0
+    call s:opam_configuration[tool]()
+  endif
+endfor
+" ## end of OPAM user-setup addition for vim / base ## keep this line
 
 " FUNCTIONS
 
@@ -153,8 +218,6 @@ let mapleader = ","
 let maplocalleader= ","
 nmap <leader>ne :NERDTreeToggle<cr>
 nmap <leader>nf :NERDTreeFocus<cr>
+nmap <leader>nc :NERDTreeClose<cr>
 "Autoformat binding
 nmap <leader>ff :Autoformat<cr>
-"CtrlP buffer searching
-nmap <leader>b :CtrlPBuffer<cr>
-

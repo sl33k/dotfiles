@@ -21,21 +21,21 @@ shade_color(){
     echo $new
 }
 script_path="`dirname \"$0\"`"
-source "$script_path/solarized_rc"
+source "$script_path/colors_rc"
 
-bgcolor="$sol_base03" #bar background color
-sepcolor="$sol_red" #seperator color
-text_highlight="$sol_base1"
-text_normal="$sol_base01"
+bgcolor="$dark2" #bar background color
+sepcolor="$neutral_red" #seperator color
+text_highlight="$light0"
+text_normal="$light2"
 ##tags
 #selected
 selbg="$bgcolor" #selected tag background color
-selfg="$sol_orange"                             #selected tag foreground
+selfg="$bright_orange"                             #selected tag foreground
 #unselected
 unselbg="$bgcolor"                           #unselected background color
-unselfg="$sol_yellow"                           #unselected foreground color
+unselfg="$neutral_yellow"                           #unselected foreground color
 #urgent
-urgbg="$sol_red"
+urgbg="$faded_red"
 urgfg="$text_normal"
 #empty
 emptybg="$bgcolor"
