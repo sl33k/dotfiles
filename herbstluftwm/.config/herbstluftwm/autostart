@@ -28,12 +28,12 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-w close
 
 #hc keybind $Mod-Return spawn urxvt -e "zsh -c '/home/sl33k/.tmx.sh term'"
-hc keybind $Mod-Return spawn st 
+hc keybind $Mod-Return spawn kitty
 hc keybind $Mod-a spawn firefox
 hc keybind $Mod-s spawn zathura
 hc keybind $Mod-d spawn xterm 
-hc keybind $Mod-space spawn dmenu_run -fn "xft:Hack:size=10" -nb $dark2 -nf $light4 -sb $dark4 -sf $light2 -i
-hc keybind $Mod-Shift-space spawn passmenu -fn "xft:Hack:size=10" -nb $dark2 -nf $light4 -sb $dark4 -sf $light2 -i
+hc keybind $Mod-space spawn dmenu_run -fn "xft:Hack Nerd Font:size=10" -nb $dark2 -nf $light4 -sb $dark4 -sf $light2 -i
+hc keybind $Mod-Shift-space spawn passmenu -fn "xft:Hack Nerd Font:size=10" -nb $dark2 -nf $light4 -sb $dark4 -sf $light2 -i
 hc keybind $Mod-Control-s spawn systemctl suspend
 # basic movement
 # focusing clients
@@ -96,7 +96,7 @@ hc set frame padding 0
 hc set window_gap 6
 hc set smart_frame_surroundings 1
 hc set smart_window_surroundings 1
-#hc set frame_bg_transparent 1
+hc set frame_bg_transparent 1
 hc set frame_active_opacity 100
 hc set frame_normal_opacity 50
 hc set frame_border_active_color $faded_blue
@@ -109,7 +109,7 @@ hc set default_frame_layout 3
 
 
 # tags
-tag_names=( work browser term mail chat stuff stuff2 )
+tag_names=( code browser spotify mail misc )
 tag_keys=( {1..9} 0 )
 
 # tags want be fetched form the other monitor. instead the monitor showing the tag will be focused

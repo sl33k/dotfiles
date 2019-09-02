@@ -13,5 +13,7 @@ execOnTag=/home/sl33k/.config/herbstluftwm/exec_on_tag.sh
 
 ###BROWSER
 $execOnTag 'browser' firefox
+$execOnTag 'spotify' spotify
+$execOnTag 'code' kitty
 
 
