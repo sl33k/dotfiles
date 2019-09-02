@@ -27,8 +27,9 @@ call plug#begin('~/.vim/plugged')
 
 " User Plugins
 Plug 'morhetz/gruvbox'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer', 'for': ['c', 'cpp', 'javascript'] }
-Plug 'vim-syntastic/syntastic'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer --rust-completer', 'for': ['c', 'cpp', 'javascript', 'rust'] }
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+
 Plug 'bling/vim-bufferline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -41,14 +42,35 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'simeji/winresizer'
 Plug 'raimondi/delimitmate'
 Plug 'Chiel92/vim-autoformat'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'bfrg/vim-cpp-modern', { 'for': ['c', 'cpp'] }
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'branch': 'release/1.x',
+  \ 'for': [
+    \ 'javascript',
+    \ 'typescript',
+    \ 'css',
+    \ 'less',
+    \ 'scss',
+    \ 'json',
+    \ 'graphql',
+    \ 'markdown',
+    \ 'vue',
+    \ 'lua',
+    \ 'php',
+    \ 'python',
+    \ 'ruby',
+    \ 'html',
+    \ 'swift' ] }
 Plug 'vim-perl/vim-perl', { 'for': 'perl'}
 Plug 'pangloss/vim-javascript', { 'for': 'javascript'}
-Plug 'prettier/vim-prettier', { 'do': 'yarn install','for': ['javascript','typescript', 'css', 'less', 'scss', 'json','graphql', 'markdown', 'vue'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'typescript'] }
 Plug 'stephpy/vim-yaml', { 'for': ['yaml']}
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript'}
+Plug 'lervag/vimtex', { 'for': 'tex' }
+
+Plug 'vim-syntastic/syntastic'
+
 Plug 'Konfekt/FastFold'
 
 " finish Plugins
@@ -65,10 +87,10 @@ set nocompatible
 set encoding=utf-8
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
-" Switch syntax highlighting on
-syntax on
 " Enable file type detection and do language-dependent indenting.
 filetype plugin indent on
+" Switch syntax highlighting on
+syntax on
 " Show line numbers
 set number
 " Show relative line numbers
@@ -139,6 +161,7 @@ let g:bufferline_echo = 0
 let g:syntastic_cpp_clang_check_post_args = ""
 let g:syntastic_cpp_clang_tidy_post_args = ""
 let g:syntastic_cpp_checkers = ['clang_tidy', 'clang_check']
+let g:syntastic_mode_map =  { "mode": "active", "passive_filetypes": [ "tex" ] }
 
 " fast fold settings
 nmap zuz <Plug>(FastFoldUpdate)
