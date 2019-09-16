@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 for monitor in "$@"; do
-    herbstclient pad $monitor 24 0 24 0
+    herbstclient pad $monitor 28 0 28 0
 done
 
 killall -q polybar
