@@ -1,13 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 
-if ! updates_arch=$(checkupdates 2> /dev/null | wc -l ); then
+if command -v checkupdates ; then
+    updates_arch=$(checkupdates 2> /dev/null | wc -l )
+else
     updates_arch=0
 fi
 
-if ! updates_aur=$(yay -Qum 2> /dev/null | wc -l); then
-# if ! updates_aur=$(cower -u 2> /dev/null | wc -l); then
-# if ! updates_aur=$(trizen -Su --aur --quiet | wc -l); then
-# if ! updates_aur=$(pikaur -Qua 2> /dev/null | wc -l); then
+if ! command -v yay; then
+    updates_aur=$(yay -Qum 2> /dev/null | wc -l)
+else
     updates_aur=0
 fi
 
