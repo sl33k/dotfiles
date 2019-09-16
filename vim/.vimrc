@@ -36,7 +36,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-surround' 
+Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'simeji/winresizer'
@@ -66,12 +66,14 @@ Plug 'vim-perl/vim-perl', { 'for': 'perl'}
 Plug 'pangloss/vim-javascript', { 'for': 'javascript'}
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'typescript'] }
 Plug 'stephpy/vim-yaml', { 'for': ['yaml']}
+Plug 'derekwyatt/vim-scala', { 'for': 'scala'}
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript'}
 Plug 'lervag/vimtex', { 'for': 'tex' }
 
 Plug 'vim-syntastic/syntastic'
 
 Plug 'Konfekt/FastFold'
+Plug 'ntpeters/vim-better-whitespace'
 
 " finish Plugins
 call plug#end()
@@ -134,6 +136,16 @@ set undofile
 " enable mouse support in all modes
 set mouse=a
 
+""" Temporary Files
+if !isdirectory($HOME."/.vim/backupdir/")
+    call mkdir($HOME."/.vim/backupdir/")
+endif
+set directory=~/.vim/backupdir
+if !isdirectory($HOME."/.vim/directorydir/")
+    call mkdir($HOME."/.vim/directorydir/")
+endif
+set backupdir=~/.vim/directorydir
+
 " PLUGIN SETTINGS
 " auto close nerdtree if its the only buffer open
 autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -170,6 +182,9 @@ let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 " vimtex settings
 let g:vimtex_view_method = 'zathura'
+" better-whitespace
+" dont clean on save
+let g:strip_whitespace_on_save = 0
 
 " THEMING
 " gruvbox
