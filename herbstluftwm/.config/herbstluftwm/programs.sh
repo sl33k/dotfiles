@@ -1,5 +1,6 @@
 #!/bin/bash
-execOnTag=/home/sl33k/.config/herbstluftwm/exec_on_tag.sh
+script_path="`dirname \"$0\"`"
+execOnTag="$script_path/exec_on_tag.sh"
 
 ####TMUX
 #start base tmux
@@ -12,8 +13,10 @@ execOnTag=/home/sl33k/.config/herbstluftwm/exec_on_tag.sh
 #done
 
 ###BROWSER
-$execOnTag 'browser' firefox
-$execOnTag 'spotify' spotify
-$execOnTag 'code' kitty
+$execOnTag 'code' kitty &
+sleep .2
+$execOnTag 'browser' firefox &
+sleep .2
+$execOnTag 'spotify' spotify &
 
 
