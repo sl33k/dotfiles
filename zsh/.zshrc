@@ -1,39 +1,113 @@
-# If you come from bash you might have to change your $PATH.
-
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="bira"
-
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-export LANG=en_US.UTF-8
-
-# Set default editor
-export EDITOR='vim'
-
-
-if [ -d "$HOME/local/bin" ]
-then
-    export PATH="$PATH:$HOME/local/bin"
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
 fi
 
-alias gcc='gcc-8'
-alias cc='gcc-8'
-alias g++='g++-8'
-alias c++='c++-8'
+# Essential
+source ~/.zplug/init.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# Make sure to use double quotes to prevent shell expansion
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "themes/terminalparty", from:oh-my-zsh
+zplug "lib/history", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh 
+zplug "plugins/tmuxinator", from:oh-my-zsh 
+zplug "plugins/tmux", from:oh-my-zsh 
+zplug "plugins/pass", from:oh-my-zsh 
+zplug "plugins/archlinux", from:oh-my-zsh 
 
-export PATH="/usr/local/Cellar/llvm/7.0.1/bin:$PATH"
-export PATH="/usr/local/Cellar/vim/8.1.0800/bin:$PATH"
+# Install packages that have not been installed yet
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    else
+        echo
+    fi
+fi
 
-# opam configuration
-test -r /Users/sl33k/.opam/opam-init/init.zsh && . /Users/sl33k/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+### Plugin settings
+# auto start tmux on zsh start
+export ZSH_TMUX_AUTOSTART_ONCE=true
+export ZSH_TMUX_AUTOCONNECT=true
+export ZSH_TMUX_FIXTERM=true
+
+## set correct keyboard layout
+setxkbmap -layout us -variant altgr-intl -option "caps:escape"
+
+### home/del/ins 
+typeset -g -A key
+
+key[Home]="${terminfo[khome]}"
+key[End]="${terminfo[kend]}"
+key[Insert]="${terminfo[kich1]}"
+key[Backspace]="${terminfo[kbs]}"
+key[Delete]="${terminfo[kdch1]}"
+key[Up]="${terminfo[kcuu1]}"
+key[Down]="${terminfo[kcud1]}"
+key[Left]="${terminfo[kcub1]}"
+key[Right]="${terminfo[kcuf1]}"
+key[PageUp]="${terminfo[kpp]}"
+key[PageDown]="${terminfo[knp]}"
+key[ShiftTab]="${terminfo[kcbt]}"
+
+# setup key accordingly
+[[ -n "${key[Home]}"      ]] && bindkey -v -- "${key[Home]}"      beginning-of-line
+[[ -n "${key[End]}"       ]] && bindkey -v -- "${key[End]}"       end-of-line
+[[ -n "${key[Insert]}"    ]] && bindkey -v -- "${key[Insert]}"    overwrite-mode
+[[ -n "${key[Backspace]}" ]] && bindkey -v -- "${key[Backspace]}" backward-delete-char
+[[ -n "${key[Delete]}"    ]] && bindkey -v -- "${key[Delete]}"    delete-char
+[[ -n "${key[Left]}"      ]] && bindkey -v -- "${key[Left]}"      backward-char
+[[ -n "${key[Right]}"     ]] && bindkey -v -- "${key[Right]}"     forward-char
+[[ -n "${key[PageUp]}"    ]] && bindkey -v -- "${key[PageUp]}"    beginning-of-buffer-or-history
+[[ -n "${key[PageDown]}"  ]] && bindkey -v -- "${key[PageDown]}"  end-of-buffer-or-history
+[[ -n "${key[ShiftTab]}"  ]] && bindkey -v -- "${key[ShiftTab]}"  reverse-menu-complete "${terminfo[khome]}" beginning-of-line
+
+# start typing + [Up-Arrow] - fuzzy find history forward
+if [[ "${key[Up]}" != "" ]]; then
+  autoload -U up-line-or-beginning-search
+  zle -N up-line-or-beginning-search
+  bindkey "${key[Up]}" up-line-or-beginning-search
+fi
+# start typing + [Down-Arrow] - fuzzy find history backward
+if [[ "${key[Down]}" != "" ]]; then
+  autoload -U down-line-or-beginning-search
+  zle -N down-line-or-beginning-search
+  bindkey "${key[Down]}" down-line-or-beginning-search
+fi
+
+# commit zplug load
+zplug load
+
+###  path modifications
+if [[ -d $HOME/local/bin ]]; then
+    export PATH="$HOME/local/bin:$PATH"
+fi
+
+if [[ -d $HOME/.perl5 ]]; then
+	#perlbrew completion
+	source ~/perl5/perlbrew/etc/bashrc
+fi
+
+if [[ -d $HOME/.nvm ]]; then
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+fi
+
+### misc settings
+export LANG=en_US.UTF-8
+export EDITOR='vim'
+
+###  Aliases
+# vimtex supoport
+alias vim="vim --servername vim"
+alias ls="ls --color=auto"
+
+#keychain, only run when inside x console
+if xhost &> /dev/null
+then
+    eval $(keychain --agents ssh,gpg --quiet --eval id_rsa id_ecdsa 54D705CFA598350FD65894BDC09A4FE22EE94CB4)
+fi
