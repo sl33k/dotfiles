@@ -126,7 +126,7 @@ alias ls="ls --color=auto"
 #keychain, only run when inside x console
 if xhost &> /dev/null
 then
-    if command -v keychain; then
+    if command -v keychain > /dev/null; then
         eval $(keychain --agents ssh,gpg --quiet --ignore-missing --eval id_rsa id_ecdsa 54D705CFA598350FD65894BDC09A4FE22EE94CB4)
     fi
 fi
