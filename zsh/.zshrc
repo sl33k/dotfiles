@@ -119,17 +119,26 @@ export LANG=en_US.UTF-8
 export EDITOR='vim'
 
 ###  Aliases
-# vimtex supoport
-alias vim="vim --servername vim"
-alias ls="ls --color=auto"
+# vimtex support (only if vim is compiled with +clientserver)
+vim_version=$(vim --version)
+if echo "$vim_version" | grep -ql "+clientserver"; then
+    alias vim="vim --servername vim"
+fi
 
-#keychain, only run when inside x console
-if xhost &> /dev/null
-then
-    if command -v keychain > /dev/null; then
+# ls colors
+if [[ $OSTYPE == "darwin"* ]]; then
+    alias ls="ls -G"
+elif [[ $OSTYPE == "linux-gnu" ]]; then
+    alias ls="ls --color=auto"
+fi
+
+#keychain, only run when installed and on unix only if in X environment 
+if command -v keychain > /dev/null; then
+    if [[ ($OSTYPE == "linux-gnu" && $(xhost &> /dev/null)) || $OSTYPE == "darwin"* ]]; then
         eval $(keychain --agents ssh,gpg --quiet --ignore-missing --eval id_rsa id_ecdsa 54D705CFA598350FD65894BDC09A4FE22EE94CB4)
     fi
 fi
+
 
 
 
