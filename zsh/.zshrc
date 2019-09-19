@@ -35,8 +35,10 @@ export ZSH_TMUX_AUTOSTART_ONCE=true
 export ZSH_TMUX_AUTOCONNECT=true
 export ZSH_TMUX_FIXTERM=true
 
-## set correct keyboard layout
-setxkbmap -layout us -variant altgr-intl -option "caps:escape"
+## set correct keyboard layout on linux
+if [[ $OSTYPE == "linux-gnu" ]]; then
+    setxkbmap -layout us -variant altgr-intl -option "caps:escape"
+fi
 
 ### home/del/ins 
 typeset -g -A key
