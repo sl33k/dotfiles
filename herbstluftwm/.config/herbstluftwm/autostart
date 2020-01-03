@@ -33,7 +33,6 @@ hc keybind $Mod-a spawn firefox
 hc keybind $Mod-s spawn zathura
 hc keybind $Mod-d spawn xterm 
 hc keybind $Mod-space spawn dmenu_run -fn "xft:Hack Nerd Font:size=10" -nb $dark2 -nf $light4 -sb $dark4 -sf $light2 -i
-hc keybind $Mod-Shift-space spawn passmenu -fn "xft:Hack Nerd Font:size=10" -nb $dark2 -nf $light4 -sb $dark4 -sf $light2 -i
 hc keybind $Mod-Control-s spawn systemctl suspend
 # basic movement
 # focusing clients
