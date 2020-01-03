@@ -81,6 +81,9 @@ if [[ "${key[Down]}" != "" ]]; then
   bindkey "${key[Down]}" down-line-or-beginning-search
 fi
 
+# bind history search
+bindkey "^R" history-incremental-pattern-search-backward
+
 # commit zplug load
 zplug load
 
