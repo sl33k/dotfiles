@@ -27,7 +27,7 @@ call plug#begin('~/.vim/plugged')
 
 " User Plugins
 Plug 'morhetz/gruvbox'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer --rust-completer', 'for': ['c', 'cpp', 'javascript', 'rust'] }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer --rust-completer', 'for': ['c', 'cpp', 'javascript', 'rust', 'python'] }
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 
 Plug 'bling/vim-bufferline'
