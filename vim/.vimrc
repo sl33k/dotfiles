@@ -27,9 +27,6 @@ call plug#begin('~/.vim/plugged')
 
 " User Plugins
 Plug 'morhetz/gruvbox'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer --rust-completer', 'for': ['c', 'cpp', 'javascript', 'rust', 'python'] }
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-
 Plug 'bling/vim-bufferline'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -156,10 +153,6 @@ let g:airline_theme='gruvbox'
 " airline + syntastic
 let g:airline#extensions#syntastic#enabled = 1
 
-"YCM Settings
-" Auto Close preview
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_confirm_extra_conf = 0
 "vim-jsx settings
 "also enable on .js files instead of on .jsx only
 let g:jsx_ext_required = 0
@@ -174,6 +167,11 @@ let g:syntastic_cpp_clang_check_post_args = ""
 let g:syntastic_cpp_clang_tidy_post_args = ""
 let g:syntastic_cpp_checkers = ['clang_tidy', 'clang_check']
 let g:syntastic_mode_map =  { "mode": "active", "passive_filetypes": [ "tex" ] }
+let g:syntastic_c_checkers = ['gcc']
+let g:syntastic_c_config_file = '.syntastic_c_config'
+"let g:syntastic_c_no_default_include_dirs = 1
+"let g:syntastic_c_compiler_options = ''
+let g:syntastic_vhdl_ghdl_args = ["--std=08"]
 
 " fast fold settings
 nmap zuz <Plug>(FastFoldUpdate)
@@ -204,7 +202,7 @@ let g:winresizer_finish_with_escape = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 " c/cpp highlighting
 let g:cpp_simple_highlight = 1
 let g:cpp_member_variable_highlight = 1
