@@ -88,36 +88,9 @@ bindkey "^R" history-incremental-pattern-search-backward
 zplug load
 
 ###  path modifications
-
-if [[ -d "/proj/opt/riscv-18.7" ]]; then
-    addpackage riscv-18.7
-    # export neccessary variables for rocket-core
-    export RISCV=/proj/opt/riscv-18.7/
-    export MAKEFLAGS="$MAKEFLAGS -j8"
-fi
-
 if [[ -d $HOME/local/bin ]]; then
     export PATH="$HOME/local/bin:$PATH"
 fi
-
-# python env
-if [[ -d $HOME/.local/bin ]]; then
-    export PATH="$HOME/.local/bin:$PATH"
-fi
-
-#perlbrew completion
-if [[ -d $HOME/.perl5 ]]; then
-	source ~/perl5/perlbrew/etc/bashrc
-fi
-
-# node version manager
-if [[ -d $HOME/.nvm ]]; then
-	export NVM_DIR="$HOME/.nvm"
-	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-fi
-
-# opam completion
-test -r /Users/sl33k/.opam/opam-init/init.zsh && . /Users/sl33k/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 ### misc settings
 export LANG=en_US.UTF-8
@@ -143,7 +116,3 @@ if command -v keychain > /dev/null; then
         eval $(keychain --agents ssh,gpg --quiet --ignore-missing --eval id_rsa id_ecdsa 54D705CFA598350FD65894BDC09A4FE22EE94CB4)
     fi
 fi
-
-
-
-
