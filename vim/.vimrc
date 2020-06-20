@@ -92,8 +92,6 @@ filetype plugin indent on
 syntax on
 " Show line numbers
 set number
-" Show relative line numbers
-set relativenumber
 "allow incremental search
 set incsearch
 "highlight search results
@@ -166,6 +164,7 @@ let g:bufferline_echo = 0
 let g:syntastic_cpp_clang_check_post_args = ""
 let g:syntastic_cpp_clang_tidy_post_args = ""
 let g:syntastic_cpp_checkers = ['clang_tidy', 'clang_check']
+let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_mode_map =  { "mode": "active", "passive_filetypes": [ "tex" ] }
 let g:syntastic_c_checkers = ['gcc']
 let g:syntastic_c_config_file = '.syntastic_c_config'
@@ -180,6 +179,7 @@ let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 " vimtex settings
 let g:vimtex_view_method = 'zathura'
+let g:vimtex_matchparen_enabled = 0
 " better-whitespace
 " dont clean on save
 let g:strip_whitespace_on_save = 0
