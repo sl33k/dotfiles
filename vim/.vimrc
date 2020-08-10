@@ -39,6 +39,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'simeji/winresizer'
 Plug 'raimondi/delimitmate'
 Plug 'Chiel92/vim-autoformat'
+Plug 'rhysd/vim-grammarous'
 Plug 'bfrg/vim-cpp-modern', { 'for': ['c', 'cpp'] }
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
@@ -65,10 +66,8 @@ Plug 'mxw/vim-jsx', { 'for': ['javascript', 'typescript'] }
 Plug 'stephpy/vim-yaml', { 'for': ['yaml']}
 Plug 'derekwyatt/vim-scala', { 'for': 'scala'}
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript'}
-Plug 'lervag/vimtex', { 'for': 'tex' }
-
 Plug 'vim-syntastic/syntastic'
-
+Plug 'lervag/vimtex'
 Plug 'Konfekt/FastFold'
 Plug 'ntpeters/vim-better-whitespace'
 
@@ -150,6 +149,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='gruvbox'
 " airline + syntastic
 let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#vimtex#enabled = 1
 
 "vim-jsx settings
 "also enable on .js files instead of on .jsx only
@@ -165,7 +165,9 @@ let g:syntastic_cpp_clang_check_post_args = ""
 let g:syntastic_cpp_clang_tidy_post_args = ""
 let g:syntastic_cpp_checkers = ['clang_tidy', 'clang_check']
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_mode_map =  { "mode": "active", "passive_filetypes": [ "tex" ] }
+"let g:syntastic_mode_map =  { "mode": "active", "passive_filetypes": [ "tex" ] }
+let g:syntastic_tex_checkers = ['lacheck']
+let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at' }
 let g:syntastic_c_checkers = ['gcc']
 let g:syntastic_c_config_file = '.syntastic_c_config'
 "let g:syntastic_c_no_default_include_dirs = 1
@@ -177,9 +179,22 @@ nmap zuz <Plug>(FastFoldUpdate)
 let g:fastfold_savehook = 1
 let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+
 " vimtex settings
+let g:vimtex_syntax_autoload_packages = ['amsmath']
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_matchparen_enabled = 0
+let g:vimtex_compiler_method = 'latexmk'
+let g:tex_flavor = 'latex'
+let g:vimtex_quickfix_open_on_warning = 0
+set spelllang=en_us
+" auto start server
+if empty(v:servername) && exists('*remote_startserver')
+    call remote_startserver('VIM')
+endif
+" grammarous settings
+let g:grammarous#use_vim_spelllang = 1
+let g:grammarous#languagetool_cmd = $HOME."/local/bin/yalafi-grammarous"
 " better-whitespace
 " dont clean on save
 let g:strip_whitespace_on_save = 0
@@ -257,3 +272,26 @@ nmap <leader>nf :NERDTreeFocus<cr>
 nmap <leader>nc :NERDTreeClose<cr>
 "Autoformat binding
 nmap <leader>ff :Autoformat<cr>
+" grammarous bindings
+nmap <leader>gf <Plug>(grammarous-move-to-info-window)
+nmap <leader>go <Plug>(grammarous-open-info-window)
+nmap <leader>gc :GrammarousCheck<cr>
+nmap <leader>gr :GrammarousReset<cr>
+let g:grammarous#hooks = {}
+function! g:grammarous#hooks.on_check(errs) abort
+    nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
+    nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
+    nmap <buffer><C-r> <Plug>(grammarous-remove-error)
+    nmap <buffer><C-R> <Plug>(grammarous-disable-rule)
+    nmap <buffer><C-f> <Plug>(grammarous-fixit)
+    nmap <buffer><C-c> <Plug>(grammarous-reset)
+endfunction
+
+function! g:grammarous#hooks.on_reset(errs) abort
+    nunmap <buffer><C-n>
+    nunmap <buffer><C-p>
+    nmap <buffer><C-r>
+    nmap <buffer><C-R>
+    nmap <buffer><C-f>
+    nmap <buffer><C-c>
+endfunction
