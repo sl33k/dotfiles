@@ -8,16 +8,16 @@ fi
 source ~/.zplug/init.zsh
 
 # Make sure to use double quotes to prevent shell expansion
-zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-history-substring-search"
+zplug "hlissner/zsh-autopair", defer:2
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-history-substring-search", defer:3
 zplug "themes/terminalparty", from:oh-my-zsh
-zplug "lib/history", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh 
 zplug "plugins/tmuxinator", from:oh-my-zsh 
 zplug "plugins/tmux", from:oh-my-zsh 
-zplug "plugins/pass", from:oh-my-zsh 
-zplug "plugins/archlinux", from:oh-my-zsh 
+zplug "plugins/history", from:oh-my-zsh
+zplug "tarrasch/zsh-bd"
 
 # Install packages that have not been installed yet
 if ! zplug check --verbose; then
@@ -83,6 +83,7 @@ fi
 
 # bind history search
 bindkey "^R" history-incremental-pattern-search-backward
+bindkey "^F" history-incremental-pattern-search-forward
 
 # commit zplug load
 zplug load
@@ -115,4 +116,21 @@ if command -v keychain > /dev/null; then
     if [[ ($OSTYPE == "linux-gnu" && $(xhost &> /dev/null)) || $OSTYPE == "darwin"* ]]; then
         eval $(keychain --agents ssh,gpg --quiet --ignore-missing --eval id_rsa id_ecdsa 54D705CFA598350FD65894BDC09A4FE22EE94CB4)
     fi
+fi
+
+setopt autocd
+setopt append_history
+setopt extended_history
+setopt hist_ignore_dups
+setopt no_beep
+setopt no_hist_beep
+setopt no_list_beep
+setopt share_history
+
+if zplug check "zsh-users/zsh-history-substring-search"; then
+    zmodload zsh/terminfo
+    bindkey "$terminfo[kcuu1]" history-substring-search-up
+    bindkey "$terminfo[kcud1]" history-substring-search-down
+    bindkey "^[[1;5A" history-substring-search-up
+    bindkey "^[[1;5B" history-substring-search-down
 fi
