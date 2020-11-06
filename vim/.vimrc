@@ -70,6 +70,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'lervag/vimtex'
 Plug 'Konfekt/FastFold'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " finish Plugins
 call plug#end()
@@ -105,6 +106,10 @@ set expandtab
 autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
 "disable expandtab for makefiles
 autocmd Filetype make setlocal noet
+" disable cursorline for tex files, it bring the highlighter to a grinding
+" halt
+autocmd Filetype tex setlocal nocursorline
+autocmd Filetype latex setlocal nocursorline
 " enable folding
 set foldenable "but not on file open
 " dont collapse on open
@@ -165,7 +170,7 @@ let g:syntastic_cpp_clang_check_post_args = ""
 let g:syntastic_cpp_clang_tidy_post_args = ""
 let g:syntastic_cpp_checkers = ['clang_tidy', 'clang_check']
 let g:syntastic_python_checkers = ['flake8']
-"let g:syntastic_mode_map =  { "mode": "active", "passive_filetypes": [ "tex" ] }
+let g:syntastic_mode_map =  { "mode": "active", "passive_filetypes": [ "asm" ] }
 let g:syntastic_tex_checkers = ['lacheck']
 let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at' }
 let g:syntastic_c_checkers = ['gcc']
@@ -186,6 +191,12 @@ let g:vimtex_view_method = 'zathura'
 let g:vimtex_matchparen_enabled = 0
 let g:vimtex_compiler_method = 'latexmk'
 let g:tex_flavor = 'latex'
+let g:tex_no_error = 1
+let g:tex_nospell = 1
+syn sync minlines=25
+syn sync maxlines=100
+let g:tex_fold_enabled=0
+
 let g:vimtex_quickfix_open_on_warning = 0
 set spelllang=en_us
 " auto start server
@@ -295,3 +306,5 @@ function! g:grammarous#hooks.on_reset(errs) abort
     nmap <buffer><C-f>
     nmap <buffer><C-c>
 endfunction
+" Markdown preview
+nmap <leader>mp <Plug>MarkdownPreviewToggle
