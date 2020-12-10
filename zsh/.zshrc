@@ -118,10 +118,14 @@ if command -v keychain > /dev/null; then
     fi
 fi
 
-setopt autocd
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 setopt append_history
 setopt extended_history
 setopt hist_ignore_dups
+
+setopt autocd
 setopt no_beep
 setopt no_hist_beep
 setopt no_list_beep
