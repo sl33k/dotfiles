@@ -71,6 +71,7 @@ Plug 'lervag/vimtex'
 Plug 'Konfekt/FastFold'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'igankevich/mesonic'
 
 " finish Plugins
 call plug#end()
@@ -173,10 +174,24 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_mode_map =  { "mode": "active", "passive_filetypes": [ "asm" ] }
 let g:syntastic_tex_checkers = ['lacheck']
 let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at' }
+
+" By default use gcc as the c checker, however, if meson is available use
+" that in conjunction with mesonic
 let g:syntastic_c_checkers = ['gcc']
 let g:syntastic_c_config_file = '.syntastic_c_config'
 "let g:syntastic_c_no_default_include_dirs = 1
 "let g:syntastic_c_compiler_options = ''
+" If there's a `meson.build` file, use meson for linting.
+autocmd FileType c call ConsiderMesonForLinting()
+if !exists('*ConsiderMesonForLinting')
+    function ConsiderMesonForLinting()
+        if filereadable('meson.build')
+            let g:syntastic_c_checkers = ['meson']
+        endif
+    endfunction
+endif
+
+
 let g:syntastic_vhdl_ghdl_args = ["--std=08"]
 
 " fast fold settings
@@ -200,7 +215,7 @@ let g:tex_fold_enabled=0
 let g:vimtex_quickfix_open_on_warning = 0
 set spelllang=en_us
 " auto start server
-if empty(v:servername) && exists('*remote_startserver')
+if empty(v:servername) && exists('*remote_startserver') && has('clientserver')
     call remote_startserver('VIM')
 endif
 " grammarous settings
