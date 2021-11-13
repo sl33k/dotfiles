@@ -92,6 +92,9 @@ zplug load
 if [[ -d $HOME/local/bin ]]; then
     export PATH="$HOME/local/bin:$PATH"
 fi
+if [[ -d $HOME/.local/bin ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
 
 ### misc settings
 export LANG=en_US.UTF-8
