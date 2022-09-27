@@ -13,9 +13,9 @@ zplug "hlissner/zsh-autopair", defer:2
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-history-substring-search", defer:3
 zplug "themes/terminalparty", from:oh-my-zsh
-zplug "plugins/git", from:oh-my-zsh 
-zplug "plugins/tmuxinator", from:oh-my-zsh 
-zplug "plugins/tmux", from:oh-my-zsh 
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/tmuxinator", from:oh-my-zsh
+zplug "plugins/tmux", from:oh-my-zsh
 zplug "plugins/history", from:oh-my-zsh
 zplug "tarrasch/zsh-bd"
 
@@ -37,7 +37,9 @@ export ZSH_TMUX_FIXTERM=true
 
 ## set correct keyboard layout on linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
-    setxkbmap -layout us -variant altgr-intl -option "caps:escape"
+    if command -v setxkbmap > /dev/null; then
+        setxkbmap -layout us -variant altgr-intl -option "caps:escape"
+    fi
 fi
 
 ### home/del/ins 
@@ -107,6 +109,11 @@ if echo "$vim_version" | grep -ql "+clientserver"; then
     alias vim="vim --servername vim"
 fi
 
+# if neovim exists alias it to vim
+if ! command -v nvim > /dev/null; then
+    alias nvim=vim
+fi
+
 # ls colors
 if [[ $OSTYPE == "darwin"* ]]; then
     alias ls="ls -G"
@@ -140,4 +147,10 @@ if zplug check "zsh-users/zsh-history-substring-search"; then
     bindkey "$terminfo[kcud1]" history-substring-search-down
     bindkey "^[[1;5A" history-substring-search-up
     bindkey "^[[1;5B" history-substring-search-down
+fi
+
+if [[ -d "$HOME/.nvm" ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
