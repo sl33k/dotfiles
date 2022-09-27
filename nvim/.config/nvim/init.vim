@@ -37,14 +37,13 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'simeji/winresizer'
 Plug 'raimondi/delimitmate'
-Plug 'rhysd/vim-grammarous', { 'for': ['tex','latex'] }
+Plug 'lervag/vimtex', { 'for': ['tex', 'latex']}
 Plug 'bfrg/vim-cpp-modern', { 'for': ['c', 'cpp'] }
 Plug 'vim-perl/vim-perl', { 'for': 'perl'}
 Plug 'pangloss/vim-javascript', { 'for': 'javascript'}
 Plug 'stephpy/vim-yaml', { 'for': ['yaml']}
 Plug 'derekwyatt/vim-scala', { 'for': 'scala'}
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript'}
-Plug 'lervag/vimtex', { 'for': ['tex', 'latex']}
 Plug 'Konfekt/FastFold'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'dense-analysis/ale'
@@ -103,8 +102,6 @@ set foldmarker====,===
 set undofile
 
 " PLUGIN SETTINGS
-" auto close nerdtree if its the only buffer open
-autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Vim Airline Powerline fonts
 let g:airline_powerline_fonts = 1
 " Vim Airline Theme
@@ -122,8 +119,6 @@ let g:bufferline_echo = 0
 
 "ale settings
 let g:ale_disable_lsp = 1 "disable lsp in ALE to use coc.nvim
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning ='⚠️'
 
 let g:ale_linters = {
             \      'cpp' : ['clangtidy'],
@@ -140,7 +135,7 @@ let g:ale_vhdl_ghdl_options = '--std=08'
 let g:ale_lint_on_save = 1
 
 "coc settings
-let g:coc_global_extensions = ['coc-pyright', 'coc-clangd', 'coc-json', 'coc-cmake', 'coc-emoji', 'coc-snippets']
+let g:coc_global_extensions = ['coc-pyright', 'coc-clangd', 'coc-json', 'coc-cmake', 'coc-emoji', 'coc-snippets', 'coc-vimtex', 'coc-ltex']
 
 
 " fast fold settings
@@ -149,10 +144,14 @@ let g:fastfold_fold_command_suffixes =  ['x', 'X', 'a', 'A', 'o', 'O', 'c', 'C']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 
 " vimtex settings
-let g:vimtex_syntax_autoload_packages = ['amsmath']
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_matchparen_enabled = 0
 let g:vimtex_compiler_method = 'latexmk'
+let g:vimtex_quickfix_ignore_filters = [
+      \ 'Underfull',
+      \ 'Overfull',
+      \]
+let g:coc_filetype_map = {'tex': 'latex'}
 let g:tex_flavor = 'latex'
 let g:tex_no_error = 1
 let g:tex_nospell = 1
@@ -162,13 +161,6 @@ let g:tex_fold_enabled=0
 
 let g:vimtex_quickfix_open_on_warning = 0
 set spelllang=en_us
-" auto start server
-if empty(v:servername) && exists('*remote_startserver') && has('clientserver')
-    call remote_startserver('VIM')
-endif
-" grammarous settings
-let g:grammarous#use_vim_spelllang = 1
-let g:grammarous#languagetool_cmd = $HOME."/local/bin/yalafi-grammarous"
 " better-whitespace
 " dont clean on save
 let g:strip_whitespace_on_save = 0
@@ -213,52 +205,33 @@ let mapleader = ","
 let maplocalleader= ","
 "fast fold
 nmap <leader>zu <Plug>(FastFoldUpdate)
-" grammarous bindings
-nmap <leader>sf <Plug>(grammarous-move-to-info-window)
-nmap <leader>so <Plug>(grammarous-open-info-window)
-nmap <leader>sc :GrammarousCheck<cr>
-nmap <leader>sr :GrammarousReset<cr>
-let g:grammarous#hooks = {}
-function! g:grammarous#hooks.on_check(errs) abort
-    nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
-    nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
-    nmap <buffer><C-r> <Plug>(grammarous-remove-error)
-    nmap <buffer><C-R> <Plug>(grammarous-disable-rule)
-    nmap <buffer><C-f> <Plug>(grammarous-fixit)
-    nmap <buffer><C-c> <Plug>(grammarous-reset)
-endfunction
 " ale bindings
 nmap <leader>al :ALELint<cr>
 
-function! g:grammarous#hooks.on_reset(errs) abort
-    nunmap <buffer><C-n>
-    nunmap <buffer><C-p>
-    nmap <buffer><C-r>
-    nmap <buffer><C-R>
-    nmap <buffer><C-f>
-    nmap <buffer><C-c>
-endfunction
 
-"CoC
 " Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <C-Tab> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> <leader>cp <Plug>(coc-diagnostic-prev)
